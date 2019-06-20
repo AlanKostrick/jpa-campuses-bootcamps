@@ -12,6 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.wecancodeit.campusesbootcamps.models.Bootcamp;
+import org.wecancodeit.campusesbootcamps.models.Campus;
+import org.wecancodeit.campusesbootcamps.repos.BootcampRepository;
+import org.wecancodeit.campusesbootcamps.repos.CampusRepository;
+
 import static org.assertj.core.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
@@ -74,6 +79,14 @@ public class EntityMappingsTest {
 		Collection<Bootcamp> bootcamps = foundCampus.getBootcamps();
 		System.out.println("The bootcamps seen are " + bootcamps);
 		assertThat(bootcamps, containsInAnyOrder(java, javaScript));
+	}
+	
+	@Test
+	public void shouldFindCampusByName() {
+		Campus campusToFind = new Campus("San Diego");
+		campusRepo.save(campusToFind);
+		Campus foundCampus = campusRepo.findByName("San Diego");
+		assertThat(campusToFind, is(foundCampus));
 	}
 
 }
