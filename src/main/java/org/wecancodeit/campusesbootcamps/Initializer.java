@@ -3,6 +3,10 @@ package org.wecancodeit.campusesbootcamps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import org.wecancodeit.campusesbootcamps.models.Bootcamp;
+import org.wecancodeit.campusesbootcamps.models.Campus;
+import org.wecancodeit.campusesbootcamps.repos.BootcampRepository;
+import org.wecancodeit.campusesbootcamps.repos.CampusRepository;
 
 @Component
 public class Initializer implements CommandLineRunner {

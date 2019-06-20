@@ -1,21 +1,23 @@
-package org.wecancodeit.campusesbootcamps;
+package org.wecancodeit.campusesbootcamps.models;
+
+import java.util.Collection;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
-public class Bootcamp {
+public class Campus {
 
 	private String name;
-
-	@ManyToOne // there are many Bootcamp(s) to one Campus
-	private Campus campus;
 
 	@Id
 	@GeneratedValue
 	private Long id;
+
+	@OneToMany(mappedBy = "campus") // one Campus to many Bootcamp(s)
+	private Collection<Bootcamp> bootcamps;
 
 	public Long getId() {
 		return id;
@@ -26,13 +28,16 @@ public class Bootcamp {
 	}
 
 	// default no args constructor required by JPA
-	protected Bootcamp() {
+	protected Campus() {
 
 	}
 
-	public Bootcamp(String name, Campus campus) {
+	public Campus(String name) {
 		this.name = name;
-		this.campus = campus;
+	}
+
+	public Collection<Bootcamp> getBootcamps() {
+		return bootcamps;
 	}
 
 	@Override
@@ -51,7 +56,7 @@ public class Bootcamp {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Bootcamp other = (Bootcamp) obj;
+		Campus other = (Campus) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
