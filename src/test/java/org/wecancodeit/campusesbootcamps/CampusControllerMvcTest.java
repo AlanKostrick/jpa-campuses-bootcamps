@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Optional;
 
 import javax.annotation.Resource;
 
@@ -17,6 +18,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -54,6 +56,11 @@ public class CampusControllerMvcTest {
 
 		mvc.perform(post("/add-campus").contentType(MediaType.APPLICATION_JSON).content(toJson(campusToAdd)))
 				.andExpect(status().is3xxRedirection());
+	}
+	@Test
+	public void shouldNotReturnErrorForNonExistantCampus() throws Exception {
+		when(campusRepo.findById(110L)).thenReturn(Optional.empty());
+		mvc.perform(get("/campus/110")).andExpect(status().isBadRequest());
 	}
 
 	private String toJson(Campus newCampus) {
